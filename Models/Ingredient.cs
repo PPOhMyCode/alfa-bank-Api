@@ -6,6 +6,13 @@ public class Ingredient: BaseModel
     public double Quantity { set; get; }
     public string Measure { set; get; }
 }
+
+public class IngredientInput
+{
+    public string Name { set; get; }
+    public double Quantity { set; get; }
+    public string Measure { set; get; }
+}
 public class IngredientView:BaseModel
 {
     public string Name { set; get; }
@@ -24,5 +31,11 @@ public class IngredientView:BaseModel
 public class IngredientCount
 {
     public IngredientView Ingredient { get; set; }
+    public double Count { set; get; }
+}
+
+public class IngredientCountInput
+{
+    public int IngredientId { get; set; }
     public double Count { set; get; }
 }

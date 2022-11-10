@@ -38,7 +38,7 @@ public class DishController : ControllerBase
         }
         DishIngredientView result = new DishIngredientView()
         {
-            Dish = new DishView(dish),
+            SystemDish = new SystemDishView(dish),
             CountOrders = 0,
             Ingredients = Ingredients
         };
@@ -65,7 +65,7 @@ public class DishController : ControllerBase
     }
 
     [HttpPost]
-    public JsonResult Post( [FromForm]DishView dishView)
+    public JsonResult Post(DishView dishView)
     {
         if (Dishes.GetAll().FirstOrDefault(x => x.Name == dishView.Name) != default)
             return new JsonResult("Error: BD have dish with this Name");
@@ -81,17 +81,35 @@ public class DishController : ControllerBase
         return new JsonResult("Dish added in BD");
     }
     
+    [HttpPost("{id}/ingredients")]
+    public JsonResult Post(int id, List<IngredientCountInput> ingredientsIdCount)
+    {
+        if (Dish_Ingredient.GetAll().FirstOrDefault(x => x.DishID == id) != default)
+            return new JsonResult("Error: Dish have ingredients, please ue Delete or Put");
+        foreach (var ingredient in ingredientsIdCount)
+        {
+            var dish_ingredient = new Dish_Ingredient()
+            {
+                DishID = id,
+                IngredientID = ingredient.IngredientId,
+                Count = ingredient.Count
+            };
+            Dish_Ingredient.Create(dish_ingredient); 
+        }
+        return new JsonResult("Ingredients added in BD");
+    }
+    
     [HttpPut("{id}")]
-    public JsonResult Put(int id, [FromForm]DishView dishView)
+    public JsonResult Put(int id, SystemDishView systemDishView)
     {
         var dish = new Dish()
         {
             Id = id,
-            Name = dishView.Name,
-            Discription = dishView.Discription,
-            Calories = dishView.Calories,
-            Weight = dishView.Weight,
-            Cost = dishView.Cost
+            Name = systemDishView.Name,
+            Discription = systemDishView.Discription,
+            Calories = systemDishView.Calories,
+            Weight = systemDishView.Weight,
+            Cost = systemDishView.Cost
         };
         Dishes.Update(dish);
         return true ? new JsonResult($"Update successful {id}") : new JsonResult("Update was not successful");

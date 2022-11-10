@@ -9,7 +9,18 @@ public class Dish: BaseModel
     public double Calories { set; get; }
 }
 
-public class DishView:BaseModel
+public class DishView
+{
+    public string Name { set; get; }
+    public string Discription { set; get; }
+    public double Cost { set; get; }
+    public double Weight { set; get; }
+    public double Calories { set; get; }
+    
+}
+
+
+public class SystemDishView:BaseModel
 {
     public string Name { set; get; }
     public string Discription { set; get; }
@@ -17,7 +28,7 @@ public class DishView:BaseModel
     public double Weight { set; get; }
     public double Calories { set; get; }
 
-    public DishView(Dish dish)
+    public SystemDishView(Dish dish)
     {
         Id = dish.Id;
         Name = dish.Name;

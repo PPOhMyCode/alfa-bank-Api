@@ -10,6 +10,14 @@ public class Order: BaseModel
     public int TypeId { get; set; }
 }
 
+public class OrderInput
+{
+    public int ChildrenId { get; set; }
+    public int DishId { get; set; }
+    public int TypeId { get; set; }
+    public DateTime DateTime { get; set; }
+}
+
 public class OrderData: BaseModel
 {
     public Children Children { get; set; }
@@ -21,7 +29,7 @@ public class OrderData: BaseModel
 public class OrderView
 {
     public ChildrenView Children { get; set; }
-    public DishView Dish  { get; set; }
+    public SystemDishView SystemDish  { get; set; }
     public string TypeMeal { get; set; }
     public string StatusOrder  { get; set; }
 }

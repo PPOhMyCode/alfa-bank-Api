@@ -28,17 +28,17 @@ public class IngredientsController
     }
 
     [HttpPost]
-    public JsonResult Post(string name,  double quantity, string measure)
+    public JsonResult Post(IngredientInput ingredientInput)
     {
-        if (Ingredients.GetAll().Where(x => x.Name == name).FirstOrDefault() != default)
+        if (Ingredients.GetAll().Where(x => x.Name == ingredientInput.Name).FirstOrDefault() != default)
             return new JsonResult("Error: BD have dish with this Name");
-        var ingredient = new Ingredient() {Name = name, Quantity = quantity,Measure = measure};
+        var ingredient = new Ingredient() {Name = ingredientInput.Name, Quantity = ingredientInput.Quantity,Measure = ingredientInput.Measure};
         Ingredients.Create(ingredient);
         return new JsonResult("Dish added in BD");
     }
     
     [HttpPut("{id}")]
-    public JsonResult Put(int id, [FromForm] IngredientView ingredientView)
+    public JsonResult Put(int id, IngredientView ingredientView)
     {
         var ingredient = new Ingredient()
         {

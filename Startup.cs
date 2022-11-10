@@ -30,7 +30,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2); 
-        var connection = @"Server=10.241.11.30,1433;Database=Test;User=sa;Password=Oh1234My5678Code!";
+        var connection = @"Server= 172.18.40.65,1433;Database=Test;User=sa;Password=Oh1234My5678Code!";
         services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
         services.AddTransient<IRepository<User>, Repository<User>>();
     }

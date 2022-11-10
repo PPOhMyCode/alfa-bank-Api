@@ -62,7 +62,7 @@ public class OrdersController : ControllerBase
         }
         DishIngredientView result = new DishIngredientView()
         {
-            Dish = new DishView(dish),
+            SystemDish = new SystemDishView(dish),
             CountOrders = 0,
             Ingredients = Ingredients
         };
@@ -91,7 +91,7 @@ public class OrdersController : ControllerBase
             TypeMeal = typeMeal.Name,
             GradeName = new GradeView(grade,teacher),
             Children = new ChildrenInfo(children),
-            Dish = new DishView(dish)
+            SystemDish = new SystemDishView(dish)
         };
         return result;
     }
@@ -116,20 +116,19 @@ public class OrdersController : ControllerBase
         var listDishIds = new List<int>();
         foreach (var summaryOrder in summaryOrders)
         {
-            if (listDishIds.Contains(summaryOrder.Dish.Id))
+            if (listDishIds.Contains(summaryOrder.SystemDish.Id))
             {
-                result.FirstOrDefault(x => x.Dish.Id == summaryOrder.Dish.Id)!.CountOrders+=summaryOrder.Count;
+                result.FirstOrDefault(x => x.SystemDish.Id == summaryOrder.SystemDish.Id)!.CountOrders+=summaryOrder.Count;
             }
             else
             {
-                listDishIds.Add(summaryOrder.Dish.Id);
-                var Ingredients = new List<IngredientCount>();
-                var dishIngredient = GetDishIngredientView(summaryOrder.Dish.Id);
+                listDishIds.Add(summaryOrder.SystemDish.Id);
+                var dishIngredient = GetDishIngredientView(summaryOrder.SystemDish.Id);
                 
                 result.Add(new DishIngredientView()
                 {
                     CountOrders = summaryOrder.Count,
-                    Dish = dishIngredient.Dish,
+                    SystemDish = dishIngredient.SystemDish,
                     Ingredients = dishIngredient.Ingredients
                 });    
             }
@@ -194,30 +193,30 @@ public class OrdersController : ControllerBase
 
 
     [HttpPost]
-    public JsonResult Post(int childrenId, int dishId, int typeMealId, DateTime dateTime)
+    public JsonResult Post(OrderInput orderInput)
     {
         if (SummaryOrder
                 .GetAll()
-                .FirstOrDefault(x => x.Date == dateTime 
-                                     && Orders.Get(x.OrderId).ChildrenId == childrenId
-                                     && Orders.Get(x.OrderId).TypeId == typeMealId) 
+                .FirstOrDefault(x => x.Date == orderInput.DateTime 
+                                     && Orders.Get(x.OrderId).ChildrenId == orderInput.ChildrenId
+                                     && Orders.Get(x.OrderId).TypeId == orderInput.TypeId) 
             != default)
             return new JsonResult("Error: BD have this order");
         var order = new Order()
         {
-            ChildrenId = childrenId,
-            DishId = dishId,
-            TypeId = typeMealId,
+            ChildrenId = orderInput.ChildrenId,
+            DishId = orderInput.DishId,
+            TypeId = orderInput.TypeId,
             StatusId = 1
         };
         Orders.Create(order);
-        var children = Children.GetAll().FirstOrDefault(x => x.Id == childrenId);
-        var timing = Timing.GetAll().FirstOrDefault(x => x.TypeId == typeMealId && x.GradleId == children.GradeID);
+        var children = Children.GetAll().FirstOrDefault(x => x.Id == orderInput.ChildrenId);
+        var timing = Timing.GetAll().FirstOrDefault(x => x.TypeId == orderInput.TypeId && x.GradleId == children.GradeID);
         var summaryOrder = new SummaryOrder()
         {
             TimingId = timing.Id,
             OrderId = order.Id,
-            Date = dateTime,
+            Date = orderInput.DateTime,
             Count = 1
         };
         SummaryOrder.Create(summaryOrder);

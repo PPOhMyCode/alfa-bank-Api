@@ -14,6 +14,12 @@ public class User: BaseModel
     
 }
 
+public class UserAutorization
+{
+    public string Login { set; get; }
+    public string Password { set; get; }
+}
+
 public class UserDataView: BaseModel
 {
     public string Login { set; get; }

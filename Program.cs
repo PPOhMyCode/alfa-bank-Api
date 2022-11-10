@@ -9,7 +9,7 @@ using MyApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connection = @"Server= 192.168.68.1,1433;Database=BDF;User=sa;Password=Oh1234My5678Code!;Integrated Security=false;TrustServerCertificate=True";
+var connection = @"Server= 10.241.10.77,1433;Database=BDF;User=sa;Password=Oh1234My5678Code!;Integrated Security=false;TrustServerCertificate=True";
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
@@ -33,6 +33,7 @@ builder.Services.AddScoped<IRepository<StatusOrder>, Repository<StatusOrder>>();
 builder.Services.AddScoped<IRepository<SummaryOrder>, Repository<SummaryOrder>>();
 builder.Services.AddScoped<IRepository<Timing>, Repository<Timing>>();
 builder.Services.AddScoped<IRepository<TypeMeal>, Repository<TypeMeal>>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -23,12 +23,12 @@ public class AutorizationController : ControllerBase
     }
     
     [HttpPost]
-    public JsonResult Get(string Login, string Password)
+    public JsonResult Get(UserAutorization userAutorization)
     {
-        var user = Users.GetAll().Where(x => x.Login == Login).FirstOrDefault();
+        var user = Users.GetAll().Where(x => x.Login == userAutorization.Login).FirstOrDefault();
         if (user == default)
             return new JsonResult("No people with this login");
-        if (user.Password != Password)
+        if (user.Password != userAutorization.Password)
             return new JsonResult("Password is wrong");
         
         var userView = new UserDataView
