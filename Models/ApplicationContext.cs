@@ -17,6 +17,7 @@ public class ApplicationContext: DbContext
     public DbSet<Timing> Timing => Set<Timing>();
     public DbSet<TypeMeal> TypeMeal => Set<TypeMeal>();
     public DbSet<SummaryOrder> SummaryOrder => Set<SummaryOrder>();
+    public DbSet<Menu> Menu => Set<Menu>();
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options){ }

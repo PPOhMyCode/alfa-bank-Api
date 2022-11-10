@@ -23,7 +23,7 @@ public class AutorizationController : ControllerBase
     }
     
     [HttpPost]
-    public JsonResult Get(UserAutorization userAutorization)
+    public JsonResult Post(UserAutorization userAutorization)
     {
         var user = Users.GetAll().Where(x => x.Login == userAutorization.Login).FirstOrDefault();
         if (user == default)
