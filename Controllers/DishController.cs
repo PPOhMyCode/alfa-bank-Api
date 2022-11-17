@@ -115,7 +115,7 @@ public class DishController : ControllerBase
         return true ? new JsonResult($"Update successful {id}") : new JsonResult("Update was not successful");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public JsonResult Delete(int id)
     {
         Dishes.Delete(id);
