@@ -36,7 +36,7 @@ public class SummaryOrderView: BaseModel
     public string TypeMeal { get; set; }
     public GradeView GradeName { get; set; }
     public string StatusOrder  { get; set; }
-    public SystemDishView SystemDish  { get; set; }
+    public Dish Dish  { get; set; }
     public ChildrenInfo Children { get; set; }
 
 }

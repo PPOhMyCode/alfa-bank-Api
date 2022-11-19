@@ -11,7 +11,7 @@ public class Dish_Ingredient : BaseModel
 
 public class DishIngredientView
 {
-    public SystemDishView SystemDish { set; get; }
+    public Dish Dish { set; get; }
     public int CountOrders { get; set; }
     public List<IngredientCount>  Ingredients { set; get; }
 }

@@ -9,7 +9,7 @@ using MyApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connection = @"Server= 192.168.53.161,1433;Database=BDF;User=sa;Password=Oh1234My5678Code!;Integrated Security=false;TrustServerCertificate=True";
+var connection = @"Server= 192.168.83.49,1433;Database=BDF;User=sa;Password=Oh1234My5678Code!;Integrated Security=false;TrustServerCertificate=True";
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {

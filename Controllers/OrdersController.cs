@@ -62,7 +62,7 @@ public class OrdersController : ControllerBase
         }
         DishIngredientView result = new DishIngredientView()
         {
-            SystemDish = new SystemDishView(dish),
+            Dish = dish,
             CountOrders = 0,
             Ingredients = Ingredients
         };
@@ -91,7 +91,7 @@ public class OrdersController : ControllerBase
             TypeMeal = typeMeal.Name,
             GradeName = new GradeView(grade,teacher),
             Children = new ChildrenInfo(children),
-            SystemDish = new SystemDishView(dish)
+            Dish = dish
         };
         return result;
     }
@@ -116,19 +116,19 @@ public class OrdersController : ControllerBase
         var listDishIds = new List<int>();
         foreach (var summaryOrder in summaryOrders)
         {
-            if (listDishIds.Contains(summaryOrder.SystemDish.Id))
+            if (listDishIds.Contains(summaryOrder.Dish.Id))
             {
-                result.FirstOrDefault(x => x.SystemDish.Id == summaryOrder.SystemDish.Id)!.CountOrders+=summaryOrder.Count;
+                result.FirstOrDefault(x => x.Dish.Id == summaryOrder.Dish.Id)!.CountOrders+=summaryOrder.Count;
             }
             else
             {
-                listDishIds.Add(summaryOrder.SystemDish.Id);
-                var dishIngredient = GetDishIngredientView(summaryOrder.SystemDish.Id);
+                listDishIds.Add(summaryOrder.Dish.Id);
+                var dishIngredient = GetDishIngredientView(summaryOrder.Dish.Id);
                 
                 result.Add(new DishIngredientView()
                 {
                     CountOrders = summaryOrder.Count,
-                    SystemDish = dishIngredient.SystemDish,
+                    Dish = dishIngredient.Dish,
                     Ingredients = dishIngredient.Ingredients
                 });    
             }

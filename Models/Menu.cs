@@ -18,6 +18,6 @@ public class MenuInput
 public class MenuView : BaseModel
 {
     public DateTime Date { get; set; }
-    public DishView Dish { get; set; }
+    public Dish Dish { get; set; }
     public TypeMeal TypeMeal { get; set; }
 }

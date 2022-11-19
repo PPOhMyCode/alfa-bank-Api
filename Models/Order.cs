@@ -29,7 +29,7 @@ public class OrderData: BaseModel
 public class OrderView
 {
     public ChildrenView Children { get; set; }
-    public SystemDishView SystemDish  { get; set; }
+    public Dish Dish  { get; set; }
     public string TypeMeal { get; set; }
     public string StatusOrder  { get; set; }
 }
