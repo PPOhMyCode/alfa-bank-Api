@@ -89,7 +89,7 @@ public class OrdersController : ControllerBase
             StatusOrder = statusOrder.Name,
             Time = timing.Time,
             TypeMeal = typeMeal.Name,
-            GradeName = new GradeView(grade,teacher),
+            Grade = new GradeView(grade,teacher),
             Children = new ChildrenInfo(children),
             Dish = dish
         };
@@ -212,6 +212,7 @@ public class OrdersController : ControllerBase
         Orders.Create(order);
         var children = Children.GetAll().FirstOrDefault(x => x.Id == orderInput.ChildrenId);
         var timing = Timing.GetAll().FirstOrDefault(x => x.TypeId == orderInput.TypeId && x.GradleId == children.GradeID);
+       
         var summaryOrder = new SummaryOrder()
         {
             TimingId = timing.Id,

@@ -62,7 +62,7 @@ public class MenuController: ControllerBase
         return new JsonResult("Dish added in Menu");
     }
     
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public JsonResult Delete(int id)
     {
         Menu.Delete(id);

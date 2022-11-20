@@ -34,7 +34,7 @@ public class SummaryOrderView: BaseModel
     public int Count { get; set; }
     public TimeSpan Time { get; set; }
     public string TypeMeal { get; set; }
-    public GradeView GradeName { get; set; }
+    public GradeView Grade { get; set; }
     public string StatusOrder  { get; set; }
     public Dish Dish  { get; set; }
     public ChildrenInfo Children { get; set; }
