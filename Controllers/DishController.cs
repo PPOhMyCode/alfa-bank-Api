@@ -9,18 +9,27 @@ public class DishController : ControllerBase
 {
     private readonly IRepository<Dish> Dishes;
     private readonly IRepository<Ingredient> Ingredient;
+    private readonly IRepository<DefaultMenu> DefaultMenu;
+    private readonly IRepository<Menu> Menu;
+    private readonly IRepository<Order> Orders;
     private readonly IRepository<Dish_Ingredient> Dish_Ingredient;
     private readonly IRepository<SummaryOrder> SummaryOrder;
 
     public DishController(IRepository<Dish> dishes,
         IRepository<Ingredient> ingredient, 
         IRepository<Dish_Ingredient> dish_Ingredient,
+        IRepository<DefaultMenu> defaultMenu,
+        IRepository<Menu> menu,
+        IRepository<Order> order,
         IRepository<SummaryOrder> summaryOrder)
     {
         Dishes = dishes;
         Ingredient = ingredient;
         Dish_Ingredient = dish_Ingredient;
         SummaryOrder = summaryOrder;
+        DefaultMenu = defaultMenu;
+        Menu = menu;
+        Orders = order;
     }
     
     private DishIngredientView GetDishIngredientView(int id)
@@ -125,7 +134,29 @@ public class DishController : ControllerBase
     [HttpDelete("{id}")]
     public JsonResult Delete(int id)
     {
+        var dish_ingredients = Dish_Ingredient.GetAll().Where(x => x.DishID == id);
+        if(dish_ingredients!=null)
+            foreach (var dish_ingredient in dish_ingredients)
+                Dish_Ingredient.Delete(dish_ingredient.Id);
+        
+        var defaultMenus = DefaultMenu.GetAll().Where(x => x.DishId == id);
+        if(defaultMenus!=null)
+            foreach (var defaultMenu in defaultMenus)
+                DefaultMenu.Delete(defaultMenu.Id);
+        
+        var menus = Menu.GetAll().Where(x => x.DishId == id);
+        System.Console.WriteLine(menus.FirstOrDefault());
+        if(menus!=null)
+            foreach (var menu in menus)
+                Menu.Delete(menu.Id);
+        
+        var orders = Orders.GetAll().Where(x => x.DishId == id);
+        if(orders!=null)
+            foreach (var order in orders)
+                Orders.Delete(order.Id);
+        
         Dishes.Delete(id);
+        
         return new JsonResult("Dish was delete from BD");
     }
 }
